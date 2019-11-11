@@ -11,7 +11,7 @@ function clear_options() {
   localStorage["ColorOn5"] = ""
   localStorage["ColorOn6"] = ""
   localStorage["ColorOn7"] = ""
-  
+
   localStorage["color1"] = ""
   localStorage["color2"] = ""
   localStorage["color3"] = ""
@@ -19,7 +19,7 @@ function clear_options() {
   localStorage["color5"] = ""
   localStorage["color6"] = ""
   localStorage["color7"] = ""
-  
+
   localStorage["mode1"] = ""
   localStorage["mode2"] = ""
   localStorage["mode3"] = ""
@@ -27,6 +27,9 @@ function clear_options() {
   localStorage["mode5"] = ""
   localStorage["mode6"] = ""
   localStorage["mode7"] = ""
+
+	localStorage["popup_notify"] = "true"
+	localStorage["console_log"] = "true"
   restore_options()
 }
 
@@ -38,7 +41,7 @@ function restore_options() {
   document.getElementById("ColorOn5").checked = checkBool(localStorage["ColorOn5"])
   document.getElementById("ColorOn6").checked = checkBool(localStorage["ColorOn6"])
   document.getElementById("ColorOn7").checked = checkBool(localStorage["ColorOn7"])
-  
+
   document.getElementById("textcolor1").style.color = localStorage["color1"]
   document.getElementById("textcolor2").style.color = localStorage["color2"]
   document.getElementById("textcolor3").style.color = localStorage["color3"]
@@ -46,7 +49,7 @@ function restore_options() {
   document.getElementById("textcolor5").style.color = localStorage["color5"]
   document.getElementById("textcolor6").style.color = localStorage["color6"]
   document.getElementById("textcolor7").style.color = localStorage["color7"]
-  
+
   document.getElementById("textcolor1").style.textDecoration = localStorage["mode1"]
   document.getElementById("textcolor2").style.textDecoration = localStorage["mode2"]
   document.getElementById("textcolor3").style.textDecoration = localStorage["mode3"]
@@ -54,7 +57,10 @@ function restore_options() {
   document.getElementById("textcolor5").style.textDecoration = localStorage["mode5"]
   document.getElementById("textcolor6").style.textDecoration = localStorage["mode6"]
   document.getElementById("textcolor7").style.textDecoration = localStorage["mode7"]
-  
+
+	document.getElementById("PopUpNotify").checked = checkBool(localStorage["popup_notify"])
+	document.getElementById("ConsoleLog").checked = checkBool(localStorage["console_log"])
+
   switch (localStorage["mode1"]) {
 	case "none":
 		document.getElementById("none1").checked = true
@@ -68,7 +74,7 @@ function restore_options() {
 	default:
 		document.getElementById("none1").checked = true
   }
-  
+
   switch (localStorage["mode2"]) {
 	case "none":
 		document.getElementById("none2").checked = true
@@ -82,7 +88,7 @@ function restore_options() {
 	default:
 		document.getElementById("none2").checked = true
   }
-  
+
   switch (localStorage["mode3"]) {
 	case "none":
 		document.getElementById("none3").checked = true
@@ -96,7 +102,7 @@ function restore_options() {
 	default:
 		document.getElementById("none3").checked = true
   }
-  
+
   switch (localStorage["mode4"]) {
 	case "none":
 		document.getElementById("none4").checked = true
@@ -110,7 +116,7 @@ function restore_options() {
 	default:
 		document.getElementById("none4").checked = true
   }
-  
+
   switch (localStorage["mode5"]) {
 	case "none":
 		document.getElementById("none5").checked = true
@@ -124,7 +130,7 @@ function restore_options() {
 	default:
 		document.getElementById("none5").checked = true
   }
-  
+
   switch (localStorage["mode6"]) {
 	case "none":
 		document.getElementById("none6").checked = true
@@ -138,7 +144,7 @@ function restore_options() {
 	default:
 		document.getElementById("none6").checked = true
   }
-  
+
   switch (localStorage["mode7"]) {
 	case "none":
 		document.getElementById("none7").checked = true
@@ -152,6 +158,7 @@ function restore_options() {
 	default:
 		document.getElementById("none7").checked = true
   }
+
   consolem("Настройки загружены!")
 }
 
@@ -231,6 +238,9 @@ document.getElementById("ColorOn4").addEventListener("change", function() {local
 document.getElementById("ColorOn5").addEventListener("change", function() {localStorage["ColorOn5"] = document.getElementById("ColorOn5").checked; consolem("Выделение 5 изменено!")}, false)
 document.getElementById("ColorOn6").addEventListener("change", function() {localStorage["ColorOn6"] = document.getElementById("ColorOn6").checked; consolem("Выделение 6 изменено!")}, false)
 document.getElementById("ColorOn7").addEventListener("change", function() {localStorage["ColorOn7"] = document.getElementById("ColorOn7").checked; consolem("Выделение 7 изменено!")}, false)
+
+document.getElementById("PopUpNotify").addEventListener("change", function() {localStorage["popup_notify"] = document.getElementById("PopUpNotify").checked; consolem("Всплывающее окно изменено!")}, false)
+document.getElementById("ConsoleLog").addEventListener("change", function() {localStorage["console_log"] = document.getElementById("ConsoleLog").checked; consolem("Отображение в консоли изменено!")}, false)
 
 document.getElementById("deautorization").addEventListener("click", function() {
 	chrome.storage.local.set({'vkaccess_token': 0});

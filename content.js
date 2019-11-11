@@ -5,12 +5,20 @@ var token,
     i = 0,
     countIds,
     temparray,
+    debug_setting,
 	  color_info,
 	  allhref = [],
     lastHrefCount,
     currentHrefCount,
     chunk = 900
 	  vkApiVersion = "5.0";
+
+chrome.runtime.sendMessage("get debug setting", function(response) {
+  debug_setting = response
+})
+chrome.runtime.sendMessage("get color info", function(response) {
+  color_info = response
+})
 
 setInterval(checkUrl, 500);
 setInterval(checkLinksCount, 100);
@@ -19,11 +27,8 @@ function showfriends() {
   chrome.storage.local.get({
       'vkaccess_token': {}
   }, function(items) {
-      // console.log(items.vkaccess_token)});
       if (items.vkaccess_token.length === undefined) {
-		showPopUp("Авторизуйтесь! Для авторизации зайдите в параметры и нажмите кнопку Авторизации.")
-		console.log("[ВКорешах]Авторизуйтесь! Для авторизации зайдите в параметры и нажмите кнопку Авторизации.");
-
+        sendInfoToUser("Авторизуйтесь! Для авторизации зайдите в параметры и нажмите кнопку Авторизации.")
       } else {
           token = items.vkaccess_token;
           chrome.storage.local.get({
@@ -35,11 +40,6 @@ function showfriends() {
                   currentColor = result.currentColor;
               }
           });
-
-    			chrome.runtime.sendMessage("get color info", function(response) {
-    				color_info = response
-    				// console.log(response)
-    			})
 
     			var regex = /vk.com\/([|.|_|\w]+)/;
     			for (var i = 0; i < document.links.length; i++) {
@@ -53,6 +53,11 @@ function showfriends() {
 		      getAllUsers();
       }
   });
+}
+
+function sendInfoToUser(Message) {
+  if (debug_setting.PopUpNotify == "true") showPopUp(Message)
+  if (debug_setting.ConsoleLog == "true") console.log(Message);
 }
 
 function showPopUp(Message) {
@@ -72,21 +77,18 @@ function getAllUsers() {
 
     if (i < countIds) {
         temparray = allhref.slice(i, i + chunk);
-		// console.log(temparray);
         i += chunk;
         documentSaveRequest = new XMLHttpRequest();
         getAreFriendsUrl = 'user_ids=' + temparray + '&fields=online, domain, friend_status, blacklisted, blacklisted_by_me&v=' + vkApiVersion + '&access_token=' + token;
-		// console.log(getAreFriendsUrl);
         documentSaveRequest.open('POST', 'https://api.vk.com/method/users.get', true);
         documentSaveRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         documentSaveRequest.onreadystatechange = function() {
             if (documentSaveRequest.readyState === 4) {
                 var friendsList = JSON.parse(documentSaveRequest.responseText);
 
-    				if(typeof(friendsList.response) == "undefined"){showPopUp("Произошла ошибка! Скорее всего мы не можем получить ответ от VK.COM")}else{
-
-    					// console.log(friendsList);
-
+    				if(typeof(friendsList.response) == "undefined"){
+              sendInfoToUser("Произошла ошибка! Скорее всего мы не можем получить ответ от VK.COM")
+            }else{
     					for (var i = 0; i < document.links.length; i++) {
     						var href = document.links[i].href
     						href = href + '.'
@@ -94,9 +96,7 @@ function getAllUsers() {
     						for (var l = 0; l < friendsList.response.length; l++){
     							var friendID = 'vk.com\/id' + friendsList.response[l].uid + '.'
     							var friendDomain = 'vk.com\/' + friendsList.response[l].domain + '.'
-    							// console.log(friendDomain + " " + friendID + " " + href);
     							if (href.includes(friendID) || href.includes(friendDomain)) {
-    								// console.log(friendDomain + " " + friendID + " " + href)
     								switch(friendsList.response[l].friend_status) {
     								  case 0:  //когда не в друзьях
     									if (friendsList.response[l].blacklisted == 1 && friendsList.response[l].blacklisted_by_me == 0 && color_info.ColorOn6 == 'true'){ //вы в чс
@@ -146,8 +146,7 @@ function getAllUsers() {
     						}
     					}
     					if (temparray.length < chunk) {
-    						//showPopUp("Все друзья показаны.")
-    						console.log("[ВКорешах]Все друзья показаны!");
+                sendInfoToUser("Все друзья показаны!")
     					} else {
     						getAllUsers();
     					}
@@ -161,7 +160,6 @@ function getAllUsers() {
 
 function checkUrl() {
     currenturl = window.location.href;
-    // console.log("current url " + currenturl + "last url " + lasturl);
     if (currenturl != lasturl){
         i = 0;
         showfriends();
@@ -171,7 +169,6 @@ function checkUrl() {
 
 function checkLinksCount() {
     currentHrefCount = document.links.length;
-    //console.log("current href " + currentHrefCount + "last href " + lastHrefCount);
     if (currentHrefCount != lastHrefCount){
         i = 0;
         showfriends();

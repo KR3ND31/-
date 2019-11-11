@@ -9,7 +9,7 @@ chrome.runtime.onMessage.addListener(
 				ColorOn5:localStorage["ColorOn5"],
 				ColorOn6:localStorage["ColorOn6"],
 				ColorOn7:localStorage["ColorOn7"],
-				
+
 				color1:localStorage["color1"],
 				color2:localStorage["color2"],
 				color3:localStorage["color3"],
@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener(
 				color5:localStorage["color5"],
 				color6:localStorage["color6"],
 				color7:localStorage["color7"],
-				
+
 				mode1:localStorage["mode1"],
 				mode2:localStorage["mode2"],
 				mode3:localStorage["mode3"],
@@ -27,5 +27,12 @@ chrome.runtime.onMessage.addListener(
 				mode7:localStorage["mode7"],
 			}
 			sendResponse(color_info)
+		}
+		if (request == "get debug setting") {
+			var debug_setting = {
+				PopUpNotify:localStorage["popup_notify"],
+				ConsoleLog:localStorage["console_log"]
+			}
+			sendResponse(debug_setting)
 		}
 })
