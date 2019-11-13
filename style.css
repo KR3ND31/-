@@ -49,26 +49,26 @@
 
 html { height: 100%; }
 body {
-  background-image: url(http://kr3nd31.ru/images/kr3nd31.jpg); /* Путь к фоновому изображению */
-  background-position: center center; /* Положение фона */
+  background-image: url(http://kr3nd31.ru/images/kr3nd31.jpg); /* пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
+  background-position: center center; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ */
   background-size: contain;
   background-attachment:fixed;
-  background-repeat: no-repeat; /* Отменяем повторение фона */
+  background-repeat: no-repeat; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ */
   background-color: #f2f2f2;
-  				
+
 }
 
 #main {
 	color: #414141;
-    width: 40%; /* Ширина слоя в пикселах */
-    margin: 5% auto; /* Отступ слева и справа */
-    background:  rgba(242,242,242, 0.85); /* Цвет фона */
-    padding: 10px; /* Поля вокруг текста */
-	border: 3px solid #414141; /* Параметры границы */
-    text-align: center; /* Выравнивание содержимого слоя по левому краю */
+    width: 40%; /* пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
+    margin: 5% auto; /* пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ */
+    background:  rgba(242,242,242, 0.85); /* пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ */
+    padding: 10px; /* пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ */
+	border: 3px solid #414141; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
+    text-align: center; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ */
 	font-family: 'Comfortaa';
    }
-   
+
 input, textarea, select, .checkbox, .radio, .button{
     font-family: 'Comfortaa';
     background-color: rgba(242,242,242, 0.85);
@@ -119,6 +119,10 @@ input:disabled{
   user-select: none;
 }
 
+.container[disabled] {
+    opacity: 0.5;
+}
+
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;
@@ -159,7 +163,7 @@ input:disabled{
 }
 
 /* Style the checkmark/indicator */
-.container .checkbox:after { 
+.container .checkbox:after {
   left: 4px;
   top: 1px;
   width: 4px;
@@ -191,11 +195,11 @@ input:disabled{
 }
 
 
-A { 
+A {
 	color: #42648b;
-    text-decoration: none; /* Убирает подчеркивание для ссылок */
-   } 
-   
+    text-decoration: none; /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ */
+   }
+
 .post_header{margin: 10px}
 .post_img{display:block;float:left;width:50px;height:50px;border-radius:50%;vertical-align:top}
 .post_header_info{margin-left:65px;padding-top:8px}

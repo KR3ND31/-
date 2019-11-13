@@ -35,4 +35,11 @@ chrome.runtime.onMessage.addListener(
 			}
 			sendResponse(debug_setting)
 		}
+		if (request == "get online setting") {
+			var online_setting = {
+				online_on:localStorage["online_on"],
+				mobile_online_on:localStorage["mobile_online_on"]
+			}
+			sendResponse(online_setting)
+		}
 })

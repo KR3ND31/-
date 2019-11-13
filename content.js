@@ -1,58 +1,60 @@
 var token,
     currenturl,
     lasturl,
-    currentColor,
     i = 0,
     countIds,
     temparray,
     debug_setting,
 	  color_info,
-	  allhref = [],
-    lastHrefCount,
-    currentHrefCount,
+    online_setting,
+    lastHrefCount = 0,
+    currentHrefCount = 0,
     chunk = 900
-	  vkApiVersion = "5.0";
+	  vkApiVersion = "5.103";
 
-chrome.runtime.sendMessage("get debug setting", function(response) {
-  debug_setting = response
-})
-chrome.runtime.sendMessage("get color info", function(response) {
-  color_info = response
-})
 
-setInterval(checkUrl, 500);
-setInterval(checkLinksCount, 100);
+init()
+
+function init(){
+  chrome.runtime.sendMessage("get debug setting", function(response) {
+    debug_setting = response
+  })
+  chrome.runtime.sendMessage("get color info", function(response) {
+    color_info = response
+  })
+
+  chrome.runtime.sendMessage("get online setting", function(response) {
+    online_setting = response
+  })
+
+  chrome.storage.local.get({'vkaccess_token': {}}, function(response) {
+    token = response.vkaccess_token
+
+    setInterval(checkLinksCount, 100);
+  })
+}
 
 function showfriends() {
-  chrome.storage.local.get({
-      'vkaccess_token': {}
-  }, function(items) {
-      if (items.vkaccess_token.length === undefined) {
-        sendInfoToUser("Авторизуйтесь! Для авторизации зайдите в параметры и нажмите кнопку Авторизации.")
-      } else {
-          token = items.vkaccess_token;
-          chrome.storage.local.get({
-              'currentColor': {}
-          }, function(result) {
-              if (typeof(result.currentColor) == "object" || result.currentColor == "#NANNANNAN") {
-                  currentColor = "#008000";
-              } else {
-                  currentColor = result.currentColor;
-              }
-          });
+  if (token.length === undefined) {
+    sendInfoToUser("Авторизуйтесь! Для авторизации зайдите в параметры и нажмите кнопку Авторизации.")
+  } else {
+      var docLinks = document.links
+  		var correct_links = filterLinks(docLinks)
+      coloringAllUsers(correct_links);
+  }
+}
 
-    			var regex = /vk.com\/([|.|_|\w]+)/;
-    			for (var i = 0; i < document.links.length; i++) {
-    				var href = document.links[i].href
-    				var match = regex.exec(href);
-    				if (match !== null && match.length > 1) {
-    					allhref.push(match[1]);
-    				}
-    			}
-
-		      getAllUsers();
-      }
-  });
+function filterLinks(Links){
+  var regex = /vk.com\/([|.|_|\w]+)/;
+  var correct_href = [];
+  for (var i = 0; i < Links.length; i++) {
+    var href = Links[i].href
+    var match = regex.exec(href);
+    if (match !== null && match.length > 1) {
+      correct_href.push(match[1]);
+    }
+  }
+  return correct_href
 }
 
 function sendInfoToUser(Message) {
@@ -72,106 +74,116 @@ function showPopUp(Message) {
     }, 2000);
 }
 
-function getAllUsers() {
-    countIds = allhref.length;
+function coloringAllUsers(Links) {
+    countIds = Links.length;
 
     if (i < countIds) {
-        temparray = allhref.slice(i, i + chunk);
+        temparray = Links.slice(i, i + chunk);
         i += chunk;
         documentSaveRequest = new XMLHttpRequest();
         getAreFriendsUrl = 'user_ids=' + temparray + '&fields=online, domain, friend_status, blacklisted, blacklisted_by_me&v=' + vkApiVersion + '&access_token=' + token;
         documentSaveRequest.open('POST', 'https://api.vk.com/method/users.get', true);
         documentSaveRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         documentSaveRequest.onreadystatechange = function() {
-            if (documentSaveRequest.readyState === 4) {
-                var friendsList = JSON.parse(documentSaveRequest.responseText);
+          if (documentSaveRequest.readyState === 4) {
+            var friendsList = JSON.parse(documentSaveRequest.responseText);
 
-    				if(typeof(friendsList.response) == "undefined"){
+            if(typeof(friendsList.response) == "undefined"){
               sendInfoToUser("Произошла ошибка! Скорее всего мы не можем получить ответ от VK.COM")
             }else{
-    					for (var i = 0; i < document.links.length; i++) {
-    						var href = document.links[i].href
-    						href = href + '.'
+            	for (var i = 0; i < document.links.length; i++) {
+                if(document.links[i].tagName == "A" && document.links[i].childElementCount == 0){
 
-    						for (var l = 0; l < friendsList.response.length; l++){
-    							var friendID = 'vk.com\/id' + friendsList.response[l].uid + '.'
-    							var friendDomain = 'vk.com\/' + friendsList.response[l].domain + '.'
-    							if (href.includes(friendID) || href.includes(friendDomain)) {
-    								switch(friendsList.response[l].friend_status) {
-    								  case 0:  //когда не в друзьях
-    									if (friendsList.response[l].blacklisted == 1 && friendsList.response[l].blacklisted_by_me == 0 && color_info.ColorOn6 == 'true'){ //вы в чс
-    										document.links[i].style.color = color_info.color6;
-    										document.links[i].style.textDecoration = color_info.mode6;
-    									} else if (friendsList.response[l].blacklisted == 0 && friendsList.response[l].blacklisted_by_me == 1 && color_info.ColorOn5 == 'true'){ //он в чс
-    										document.links[i].style.color = color_info.color5;
-    										document.links[i].style.textDecoration = color_info.mode5;
-    									} else if (friendsList.response[l].blacklisted == 1 && friendsList.response[l].blacklisted_by_me == 1 && color_info.ColorOn7 == 'true'){ //взаимный чс в чс
-    										document.links[i].style.color = color_info.color7;
-    										document.links[i].style.textDecoration = color_info.mode7;
-    									} else if (color_info.ColorOn4 == 'true'){
-    										document.links[i].style.color = color_info.color4;
-    										document.links[i].style.textDecoration = color_info.mode4;
-    									}
-    									break
 
-    								  case 1:  //когда вы подписаны
-    										if (color_info.ColorOn2 == 'true'){
-    											document.links[i].style.color = color_info.color2;
-    											document.links[i].style.textDecoration = color_info.mode2;
-    										}
-    									break
+              		var href = document.links[i].href
+              		href = href + '.'
 
-    								  case 2:  //когда он на нас подписан
-    										if (color_info.ColorOn3 == 'true'){
-    											document.links[i].style.color = color_info.color3;
-    											document.links[i].style.textDecoration = color_info.mode3;
-    										}
-    									break
+              		for (var l = 0; l < friendsList.response.length; l++){
+              			var friendID = 'vk.com\/id' + friendsList.response[l].uid + '.'
+              			var friendDomain = 'vk.com\/' + friendsList.response[l].domain + '.'
+              			if (href.includes(friendID) || href.includes(friendDomain)) {
 
-    								  case 3:  // когда в друзьях
-    										if (color_info.ColorOn1 == 'true'){
-    										document.links[i].style.color = color_info.color1;
-    										document.links[i].style.textDecoration = color_info.mode1;
-    										}
-    									break
+                      if(online_setting.online_on == "true" && friendsList.response[l].online == 1){
+                        if(online_setting.mobile_online_on == "true" && friendsList.response[l].online_mobile == 1){
+                            document.links[i].insertAdjacentHTML('beforeend','<div style="display: inline-block;margin-left: 4px;border-radius: 3px;bottom: 0;width: 8px;height: 12px;background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgNyAxMSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0iIzhBQzE3NiIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0ib25saW5lIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjAzLjAwMDAwMCwgLTQyMi4wMDAwMDApIj4KICAgICAgICAgICAgPHBhdGggZD0iTTIwMyw0MjMuNTA2NDM5IEMyMDMsNDIyLjY3NDQ1NiAyMDMuNjcxMTg5LDQyMiAyMDQuNTAxNjc2LDQyMiBMMjA4LjQ5ODMyNCw0MjIgQzIwOS4zMjc2NzcsNDIyIDIxMCw0MjIuNjcxNTQxIDIxMCw0MjMuNTA2NDM5IEwyMTAsNDMxLjQ5MzU2MSBDMjEwLDQzMi4zMjU1NDQgMjA5LjMyODgxMSw0MzMgMjA4LjQ5ODMyNCw0MzMgTDIwNC41MDE2NzYsNDMzIEMyMDMuNjcyMzIzLDQzMyAyMDMsNDMyLjMyODQ1OSAyMDMsNDMxLjQ5MzU2MSBMMjAzLDQyMy41MDY0MzkgWiBNMjA0LDQyNCBMMjA5LDQyNCBMMjA5LDQzMCBMMjA0LDQzMCBMMjA0LDQyNCBaIiBpZD0ibW9iaWxlX20iLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==);"></div>')
+                        }else{
+                          document.links[i].insertAdjacentHTML('beforeend','<div style="background: #8ac176;display: inline-block;bottom: 0;width: 8px;margin-left: 4px;border-radius: 100%;height: 8px;"></div>')
+                        }
+                      }
 
-    								  default:
-    								}
+              				switch(friendsList.response[l].friend_status) {
+              				  case 0:  //когда не в друзьях
+              					if (friendsList.response[l].blacklisted == 1 && friendsList.response[l].blacklisted_by_me == 0 && color_info.ColorOn6 == 'true'){ //вы в чс
+              						document.links[i].style.color = color_info.color6;
+              						document.links[i].style.textDecoration = color_info.mode6;
+              					} else if (friendsList.response[l].blacklisted == 0 && friendsList.response[l].blacklisted_by_me == 1 && color_info.ColorOn5 == 'true'){ //он в чс
+              						document.links[i].style.color = color_info.color5;
+              						document.links[i].style.textDecoration = color_info.mode5;
+              					} else if (friendsList.response[l].blacklisted == 1 && friendsList.response[l].blacklisted_by_me == 1 && color_info.ColorOn7 == 'true'){ //взаимный чс в чс
+              						document.links[i].style.color = color_info.color7;
+              						document.links[i].style.textDecoration = color_info.mode7;
+              					} else if (color_info.ColorOn4 == 'true'){
+              						document.links[i].style.color = color_info.color4;
+              						document.links[i].style.textDecoration = color_info.mode4;
+              					}
+              					break
 
-    								if (href == "https://vk.com/kr3nd31." || href == "https://vk.com/id59234599.") {
-    								document.links[i].style.color = "#FFC300";
-    								document.links[i].style.fontWeight = "bold";
-    								}
-    							}
-    						}
-    					}
-    					if (temparray.length < chunk) {
+              				  case 1:  //когда вы подписаны
+              						if (color_info.ColorOn2 == 'true'){
+              							document.links[i].style.color = color_info.color2;
+              							document.links[i].style.textDecoration = color_info.mode2;
+              						}
+              					break
+
+              				  case 2:  //когда он на нас подписан
+              						if (color_info.ColorOn3 == 'true'){
+              							document.links[i].style.color = color_info.color3;
+              							document.links[i].style.textDecoration = color_info.mode3;
+              						}
+              					break
+
+              				  case 3:  // когда в друзьях
+              						if (color_info.ColorOn1 == 'true'){
+              						document.links[i].style.color = color_info.color1;
+              						document.links[i].style.textDecoration = color_info.mode1;
+              						}
+              					break
+
+              				  default:
+              				}
+
+              				if (href == "https://vk.com/kr3nd31." || href == "https://vk.com/id59234599.") {
+              				document.links[i].style.color = "#FFC300";
+              				document.links[i].style.fontWeight = "bold";
+              				}
+              			}
+              		}
+                }
+            	}
+            	if (temparray.length < chunk) {
                 sendInfoToUser("Все друзья показаны!")
-    					} else {
-    						getAllUsers();
-    					}
+            	} else {
+            		coloringAllUsers();
+            	}
 
-    				}
-			    }
+}
+          }
         }
         documentSaveRequest.send(getAreFriendsUrl);
     }
 }
 
-function checkUrl() {
-    currenturl = window.location.href;
-    if (currenturl != lasturl){
-        i = 0;
-        showfriends();
-    }
-    lasturl = window.location.href;
-}
-
 function checkLinksCount() {
+    currenturl = window.location.pathname;
     currentHrefCount = document.links.length;
     if (currentHrefCount != lastHrefCount){
-        i = 0;
+        if (currenturl != lasturl){
+            i = 0; // если перешли на новую страницу
+        }else{
+            i = lastHrefCount; //что бы каждый раз когда появлялись новые ссылки не чекало все заново, а чекало только новые ссылки
+        }
         showfriends();
     }
+    lasturl = window.location.pathname;
     lastHrefCount = document.links.length;
 }

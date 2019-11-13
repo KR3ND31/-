@@ -28,6 +28,9 @@ function clear_options() {
   localStorage["mode6"] = ""
   localStorage["mode7"] = ""
 
+	localStorage["online_on"] = ""
+	localStorage["mobile_online_on"] = ""
+
 	localStorage["popup_notify"] = "true"
 	localStorage["console_log"] = "true"
   restore_options()
@@ -60,6 +63,27 @@ function restore_options() {
 
 	document.getElementById("PopUpNotify").checked = checkBool(localStorage["popup_notify"])
 	document.getElementById("ConsoleLog").checked = checkBool(localStorage["console_log"])
+
+	if(checkBool(localStorage["online_on"])){
+		document.getElementById("OnlineOn").checked = true
+		document.getElementById("online").insertAdjacentHTML('beforeend','<div style="background: #8ac176;display: inline-block;bottom: 0;width: 8px;margin-left: 4px;border-radius: 100%;height: 8px;"></div>')
+		document.getElementById("MobileOnlineOn_Container").style.display = "";
+	}else{
+		document.getElementById("OnlineOn").checked = false
+		if(document.getElementById("online").children[0] != undefined){
+			document.getElementById("online").removeChild(document.getElementById("online").children[0])
+		}
+		document.getElementById("MobileOnlineOn_Container").style.display = "none";
+	}
+	if(checkBool(localStorage["mobile_online_on"])){
+		document.getElementById("MobileOnlineOn").checked = true
+		document.getElementById("mobile_online").insertAdjacentHTML('beforeend','<div style="display: inline-block;margin-left: 4px;border-radius: 3px;bottom: 0;width: 8px;height: 12px;background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgNyAxMSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0iIzhBQzE3NiIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0ib25saW5lIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjAzLjAwMDAwMCwgLTQyMi4wMDAwMDApIj4KICAgICAgICAgICAgPHBhdGggZD0iTTIwMyw0MjMuNTA2NDM5IEMyMDMsNDIyLjY3NDQ1NiAyMDMuNjcxMTg5LDQyMiAyMDQuNTAxNjc2LDQyMiBMMjA4LjQ5ODMyNCw0MjIgQzIwOS4zMjc2NzcsNDIyIDIxMCw0MjIuNjcxNTQxIDIxMCw0MjMuNTA2NDM5IEwyMTAsNDMxLjQ5MzU2MSBDMjEwLDQzMi4zMjU1NDQgMjA5LjMyODgxMSw0MzMgMjA4LjQ5ODMyNCw0MzMgTDIwNC41MDE2NzYsNDMzIEMyMDMuNjcyMzIzLDQzMyAyMDMsNDMyLjMyODQ1OSAyMDMsNDMxLjQ5MzU2MSBMMjAzLDQyMy41MDY0MzkgWiBNMjA0LDQyNCBMMjA5LDQyNCBMMjA5LDQzMCBMMjA0LDQzMCBMMjA0LDQyNCBaIiBpZD0ibW9iaWxlX20iLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==);"></div>')
+	}else{
+		document.getElementById("MobileOnlineOn").checked = false
+		if(document.getElementById("mobile_online").children[0] != undefined){
+			document.getElementById("mobile_online").removeChild(document.getElementById("mobile_online").children[0])
+		}
+	}
 
   switch (localStorage["mode1"]) {
 	case "none":
@@ -239,6 +263,9 @@ document.getElementById("ColorOn5").addEventListener("change", function() {local
 document.getElementById("ColorOn6").addEventListener("change", function() {localStorage["ColorOn6"] = document.getElementById("ColorOn6").checked; consolem("Выделение 6 изменено!")}, false)
 document.getElementById("ColorOn7").addEventListener("change", function() {localStorage["ColorOn7"] = document.getElementById("ColorOn7").checked; consolem("Выделение 7 изменено!")}, false)
 
+document.getElementById("OnlineOn").addEventListener("change", function() {localStorage["online_on"] = document.getElementById("OnlineOn").checked; if(document.getElementById("OnlineOn").checked){document.getElementById("MobileOnlineOn_Container").style.display = ""; document.getElementById("online").insertAdjacentHTML('beforeend','<div style="background: #8ac176;display: inline-block;bottom: 0;width: 8px;margin-left: 4px;border-radius: 100%;height: 8px;"></div>')}else{ document.getElementById("online").removeChild(document.getElementById("online").children[0]);document.getElementById("MobileOnlineOn_Container").style.display = "none";}; consolem("Показывать онлайн изменено!")}, false)
+document.getElementById("MobileOnlineOn").addEventListener("change", function() {localStorage["mobile_online_on"] = document.getElementById("MobileOnlineOn").checked; if(document.getElementById("MobileOnlineOn").checked){document.getElementById("mobile_online").insertAdjacentHTML('beforeend','<div style="display: inline-block;margin-left: 4px;border-radius: 3px;bottom: 0;width: 8px;height: 12px;background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgNyAxMSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0iIzhBQzE3NiIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0ib25saW5lIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjAzLjAwMDAwMCwgLTQyMi4wMDAwMDApIj4KICAgICAgICAgICAgPHBhdGggZD0iTTIwMyw0MjMuNTA2NDM5IEMyMDMsNDIyLjY3NDQ1NiAyMDMuNjcxMTg5LDQyMiAyMDQuNTAxNjc2LDQyMiBMMjA4LjQ5ODMyNCw0MjIgQzIwOS4zMjc2NzcsNDIyIDIxMCw0MjIuNjcxNTQxIDIxMCw0MjMuNTA2NDM5IEwyMTAsNDMxLjQ5MzU2MSBDMjEwLDQzMi4zMjU1NDQgMjA5LjMyODgxMSw0MzMgMjA4LjQ5ODMyNCw0MzMgTDIwNC41MDE2NzYsNDMzIEMyMDMuNjcyMzIzLDQzMyAyMDMsNDMyLjMyODQ1OSAyMDMsNDMxLjQ5MzU2MSBMMjAzLDQyMy41MDY0MzkgWiBNMjA0LDQyNCBMMjA5LDQyNCBMMjA5LDQzMCBMMjA0LDQzMCBMMjA0LDQyNCBaIiBpZD0ibW9iaWxlX20iLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==);"></div>')}else{document.getElementById("mobile_online").removeChild(document.getElementById("mobile_online").children[0])} consolem("Показывать мобильный онлайн отдельно изменено!")}, false)
+
 document.getElementById("PopUpNotify").addEventListener("change", function() {localStorage["popup_notify"] = document.getElementById("PopUpNotify").checked; consolem("Всплывающее окно изменено!")}, false)
 document.getElementById("ConsoleLog").addEventListener("change", function() {localStorage["console_log"] = document.getElementById("ConsoleLog").checked; consolem("Отображение в консоли изменено!")}, false)
 
@@ -304,7 +331,7 @@ function listenerHandler(authenticationTabId) {
                     return;
                 }
                 chrome.storage.local.set({'vkaccess_token': vkAccessToken});
-				consolem("Авторизация прошла успешно! Что бы деавторизоваться нажмите кнопку Деавторизации!")
+								consolem("Авторизация прошла успешно! Что бы деавторизоваться нажмите кнопку Деавторизации!")
             }
         }
     };
