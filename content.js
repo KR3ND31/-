@@ -96,11 +96,10 @@ function coloringAllUsers(Links) {
 
 
               		var href = document.links[i].href
-              		href = href + '.'
 
               		for (var l = 0; l < friendsList.response.length; l++){
-              			var friendID = 'vk.com\/id' + friendsList.response[l].uid + '.'
-              			var friendDomain = 'vk.com\/' + friendsList.response[l].domain + '.'
+              			var friendID = 'vk.com\/id' + friendsList.response[l].id
+              			var friendDomain = 'vk.com\/' + friendsList.response[l].domain
               			if (href.includes(friendID) || href.includes(friendDomain)) {
 
                       if(online_setting.online_on == "true" && friendsList.response[l].online == 1){
@@ -176,14 +175,18 @@ function coloringAllUsers(Links) {
 function checkLinksCount() {
     currenturl = window.location.pathname;
     currentHrefCount = document.links.length;
-    if (currentHrefCount != lastHrefCount){
-        if (currenturl != lasturl){
-            i = 0; // если перешли на новую страницу
-        }else{
-            i = lastHrefCount; //что бы каждый раз когда появлялись новые ссылки не чекало все заново, а чекало только новые ссылки
-        }
-        showfriends();
+
+    if (currenturl != lasturl){ //если перешли на новую страницу
+      i = 0; // если перешли на новую страницу
+      showfriends();
     }
+    else {
+      if(currentHrefCount != lastHrefCount){ //если не перешли на новую страницу, но колличество ссылко изменилось
+        i = lastHrefCount; //что бы каждый раз когда появлялись новые ссылки не чекало все заново, а чекало только новые ссылки
+        showfriends();
+      }
+    }
+
     lasturl = window.location.pathname;
     lastHrefCount = document.links.length;
 }

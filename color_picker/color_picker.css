@@ -7,53 +7,52 @@
 	position:absolute;
 	top:0;
 	left:100%;
-	}
-	
+}
+
 .out_html_color{
 	width:70px;
 	height:70px;
 	position:absolute;
-	top:40%;
-	left:100%;
-	}
-	
+	top: 30%;
+	left: 101%;
+}
+
 .picker{
 	background: #fff;
 	position: fixed;
 	top:7%;
-	left:2%;	
+	left:2%;
 	-moz-user-select: none;
-	  -webkit-user-select: none; 
+	-webkit-user-select: none;
 	width: 241px;
 	height: 248px;
 }
+
 #block_picker{
 	background-color:red;
 	height:180px;
 	width:180px;
 	-moz-user-select: none;
 	-khtml-user-select: none;
-	user-select: none; 
-	  -webkit-user-select: none;   
+	user-select: none;
+	-webkit-user-select: none;
 }
+
 #block_picker img {
 	width:180px;
-	}
+}
+
 #line {
 	position: absolute;
 	left:200px;
 	cursor: pointer;
 	-moz-user-select: none;
 	-khtml-user-select: none;
-	user-select: none; 
-	  -webkit-user-select: none;   
-	
+	user-select: none;
+	-webkit-user-select: none;
 }
 
-
-
 .right_arrow {
-	
 	width:0;
 	height:0;
 	left:23px;
@@ -63,8 +62,8 @@
 	border-top:6px solid transparent;
 	border-right:10px solid black;
 }
+
 .left_arrow {
-	
 	width:0;
 	height:0;
 	position:absolute;
@@ -72,8 +71,8 @@
 	border-left:10px solid black;
 	border-top:6px solid transparent;
 	border-right:8px solid transparent;
-	
 }
+
 #arrows {
 	position:absolute;
 	top:0;
@@ -83,10 +82,11 @@
 	cursor: pointer;
 	-moz-user-select: none;
 	-khtml-user-select: none;
-	user-select: none; 
-	  -webkit-user-select: none;        
-	
+	user-select: none;
+	-webkit-user-select: none;
+
 }
+
 #circle {
 	width:8px;
 	height:8px;
@@ -98,22 +98,23 @@
 	cursor: default;
 	-moz-user-select: none;
 	-khtml-user-select: none;
-	user-select: none; 
-	  -webkit-user-select: none;   
-	}
+	user-select: none;
+	-webkit-user-select: none;
+}
+
 .square {
 	position:absolute;
 	top:30%;
 	left:70%;
 	height:30px;
-	
-	}
+}
+
 .square input {
 	width:80px;
 	height:25px;
+}
 
-	}
-.cO {
+.cO{
 	width:20px;
 	height:19px;
 	background-color:white;

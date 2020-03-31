@@ -1,6 +1,6 @@
-window.onload = function() {
-    picker.init();
-	};
+window.addEventListener('load', function() {
+   picker.init();
+});
 
 var picker = {
 	V: 100,
