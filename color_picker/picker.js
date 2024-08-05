@@ -153,12 +153,6 @@ init: function (elem) {
 
 	Block.cPos = function (e){
 
-		// console.log(e)
-		// console.log(mouse.pageX(e))
-		// console.log(mouse.pageY(e))
-		// console.log(bWi)
-		// console.log(bHe)
-
 		var top, left, S, V;
 
 			document.ondragstart = function() { return false;}
