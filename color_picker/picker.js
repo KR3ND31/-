@@ -8,32 +8,31 @@ var picker = {
 	status:false,
 
 	init: function () {
-     var id_elements = {primary: "primary_block", arrows: "arrows", block: "block_picker", circle: "circle", line: "line"};
+		var id_elements = {primary: "primary_block", arrows: "arrows", block: "block_picker", circle: "circle", line: "line"};
 
-    var s ={h:180, w:20, th: id_elements.arrows, bk: id_elements.block, line: id_elements.line};
-	/*
-	Параметры передаваемые через обьект "s" обьекту "Line"
-	h - высота линни Hue
-	w- ширина линни Hue
-	th  - id для елмента в котором находяться стрелки || ползунок для управление шкалой Hue
-	bk - id блока главного блока с изображение и изменяемым фоном
-	*/
-    Line.init(s);//отрисовка линий hue и привязка событий
+		var s ={h:180, w:20, th: id_elements.arrows, bk: id_elements.block, line: id_elements.line};
+		/*
+		Параметры передаваемые через обьект "s" обьекту "Line"
+		h - высота линни Hue
+		w- ширина линни Hue
+		th  - id для елмента в котором находяться стрелки || ползунок для управление шкалой Hue
+		bk - id блока главного блока с изображение и изменяемым фоном
+		*/
+		Line.init(s);//отрисовка линий hue и привязка событий
 
 
-     var b = {primary: id_elements.primary, block: id_elements.block, circle: id_elements.circle};
-	/*
-	Параметры передаваемые через обьект "b" обьекту "Block"
-	id - id блока выбора цвета (основной блок)
-	c - круг для перемещения по основнoму блоку(для выбора цвета)
-	*/
-     Block.init(b);// привязка событий к блоку и кругу для управления
+		var b = {primary: id_elements.primary, block: id_elements.block, circle: id_elements.circle};
+		/*
+		Параметры передаваемые через обьект "b" обьекту "Block"
+		id - id блока выбора цвета (основной блок)
+		c - круг для перемещения по основнoму блоку(для выбора цвета)
+		*/
+		Block.init(b);// привязка событий к блоку и кругу для управления
 
-     picker.out_color = document.getElementById("out_color");
-  	 picker.out_html_color = document.getElementById("out_html_color");
-  	 picker.nick = document.getElementById("nick");
-
-}
+		picker.out_color = document.getElementById("out_color");
+		picker.out_html_color = document.getElementById("out_html_color");
+		picker.nick = document.getElementById("nick");
+	}
 };
 
 var Line ={
@@ -138,82 +137,86 @@ var Line ={
 	}
 };
 
-	var Block = {
+var Block = {
 
-	init: function (elem) {
+init: function (elem) {
+	var circle, block, colorO, bPstX, bPstY, bWi, bHe, cW, cH, pxY, pxX;
 
-		var circle, block, colorO, bPstX, bPstY, bWi, bHe, cW, cH, pxY, pxX;
+		circle = document.getElementById(elem.circle);
+		block = document.getElementById(elem.block);
+		cW = circle.offsetWidth;
+		cH = circle.offsetHeight;
+		bWi = block.offsetWidth - cW;
+		bHe = block.offsetHeight - cH;
+		pxY = bHe / 100;
+		pxX = bWi / 100;
 
-		 circle = document.getElementById(elem.circle);
-		 block = document.getElementById(elem.block);
-		    cW = circle.offsetWidth;
-	         cH = circle.offsetHeight;
-		       bWi = block.offsetWidth - cW;
-	             bHe = block.offsetHeight - cH;
-		           pxY = bHe / 100;
-		            pxX = bWi / 100;
+	Block.cPos = function (e){
 
-		Block.cPos = function (e){
+		// console.log(e)
+		// console.log(mouse.pageX(e))
+		// console.log(mouse.pageY(e))
+		// console.log(bWi)
+		// console.log(bHe)
 
-			var top, left, S, V;
+		var top, left, S, V;
 
-			 document.ondragstart = function() { return false;}
+			document.ondragstart = function() { return false;}
 
-			   document.body.onselectstart = function() { return false; }
+			document.body.onselectstart = function() { return false; }
 
-			left = mouse.pageX(e) - bPstX - cW/2;
-			 left = (left  < 0)? 0 : left;
-			  left = (left > bWi  )? bWi  : left;
+		left = mouse.pageX(e) - bPstX - cW/2;
+			left = (left  < 0)? 0 : left;
+			left = (left > bWi  )? bWi  : left;
 
-			   circle.style.left = left  + "px";
+			circle.style.left = left  + "px";
 
-			    S = Math.ceil(left /pxX) ;
+			S = Math.ceil(left /pxX) ;
 
-				 top = mouse.pageY(e)  - bPstY - cH/2;
-			      top = (top > bHe  )? bHe : top;
+				top = mouse.pageY(e)  - bPstY - cH/2;
+				top = (top > bHe  )? bHe : top;
 
-			        top = (top < 0)? 0 : top;
+				top = (top < 0)? 0 : top;
 
-			          circle.style.top = top   + "px";
+					circle.style.top = top   + "px";
 
-			            V = Math.ceil(Math.abs(top / pxY - 100));
+					V = Math.ceil(Math.abs(top / pxY - 100));
 
-						 if (V <50) circle.style.borderColor = "#fff";
+						if (V <50) circle.style.borderColor = "#fff";
 
-			else circle.style.borderColor = "#000";
+		else circle.style.borderColor = "#000";
 
-			picker.S = S;
+		picker.S = S;
 
-			  picker.V = V;
+			picker.V = V;
 
-			     picker.out_color.style.backgroundColor = "rgb("+convert.hsv_rgb(Line.Hue,S,V)+")";
-				 var _res = convert.hsv_rgb(Line.Hue,S,V);
+				picker.out_color.style.backgroundColor = "rgb("+convert.hsv_rgb(Line.Hue,S,V)+")";
+				var _res = convert.hsv_rgb(Line.Hue,S,V);
 
-				 var _res = rgbToHex (_res[0], _res[1], _res[2]);
+				var _res = rgbToHex (_res[0], _res[1], _res[2]);
 
-				 picker.out_html_color.innerText = _res;
+				picker.out_html_color.innerText = _res;
 
-				 picker.nick.style.color = _res;
+				picker.nick.style.color = _res;
 
-				 chrome.storage.local.set({'currentColor': _res});
+				chrome.storage.local.set({'currentColor': _res});
 
-			}
-
-			block.onclick = function(e){Block.cPos(e);}
-			block.onmousedown  = function (){
-			document.onmousemove = function (e){
-				bPstX = Obj.positX(block);
-				bPstY = Obj.positY(block);
-				Block.cPos(e);
-				}
-			}
-
-			document.onmouseup=function() {
-				document.onmousemove = null;
-				}
 		}
 
-		};
+		block.onclick = function(e){Block.cPos(e);}
+		block.onmousedown  = function (){
+		document.onmousemove = function (e){
+			bPstX = Obj.positX(block);
+			bPstY = Obj.positY(block);
+			Block.cPos(e);
+			}
+		}
+
+		document.onmouseup=function() {
+			document.onmousemove = null;
+			}
+	}
+};
 
 var convert = {
 
