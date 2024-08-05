@@ -1,12 +1,5 @@
 {
    "author": "KR3ND31",
-   "background": {
-      "scripts": [ "background.js" ]
-   },
-   "browser_action": {
-      "default_icon": "icon128.png",
-      "default_title": "ВКорешах"
-   },
    "content_scripts": [ {
       "js": [ "content.js" ],
       "matches": [ "*://vk.com/*", "*://*.vk.com/*" ]
@@ -17,10 +10,11 @@
 	  "48": "icon48.png",
       "128": "icon128.png"
    },
-   "manifest_version": 2,
+   "manifest_version": 3,
    "name": "ВКорешах",
    "options_page": "options.html",
-   "permissions": [ "contextMenus", "tabs", "storage", "*://api.vk.com/*", "*://*.vk.com/*" ],
+   "permissions": ["storage"],
+   "host_permissions": ["*://api.vk.com/*", "*://*.vk.com/*"],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "0.3.2"
+   "version": "0.3.6"
 }

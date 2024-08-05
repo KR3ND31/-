@@ -1,292 +1,452 @@
 <!DOCTYPE html>
 <html>
-	<head><title>Настройки</title><meta charset="UTF-8"></head>
+	<head>
+		<title>Настройки</title>
+		<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	</head>
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+
+	<script src="js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="color_picker/color_picker.css">
-	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript" src="color_picker/Lib.js" ></script>
 	<script type="text/javascript" src="color_picker/picker.js"></script>
 
+
 	<body>
-		<div id="main">
-			<div style="width:100%;">
-				<div id="color info">
-					<h1>Настройки</h1>
+		<div id="p_prldr">
+        <div class="contpre">
+            <span class="svg_anm"></span>
+        </div>
+    </div>
+		<div class="picker" id="primary_block">
+			<div id="line">
+				<div id="arrows">
+					<div class="left_arrow"></div>
+					<div class="right_arrow"></div>
+				</div>
+			</div>
+			<div id="block_picker">
+				<img src="color_picker/bgGradient.png" class="bk_img"><div class="circle" id="circle"></div>
+			</div>
+			<div id="out_color" class="out_color"></div>
+			<div id="out_html_color" class="out_html_color"></div>
 
-					<div id="main">
-						<div id="textcolor1"><h2>В друзьях</h2></div>
-						<label class="container">Вкл/Выкл
-							<input id="ColorOn1" type="checkbox">
-							<span class="checkbox"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Ничего
-						  <input type="radio" checked name="line1" id="none1">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Подчеркнуть
-						  <input type="radio" name="line1" id="under_line1">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Зачеркнуть
-						  <input type="radio" name="line1" id="through_line1">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<input type="button" id="color1" value="Установить цвет">
+			<div class="post_header">
+				<a class="post_image" href="http://vk.com/id59234599">
+					<img src="https://pp.userapi.com/c626917/v626917599/4e6b7/RAHFAoo6-7I.jpg" data-post-id="59234599_4147" data-post-click-type="post_owner_img" width="50" height="50" class="post_img">
+				</a>
+
+				<div class="post_header_info">
+					<h6 class="post_author"><a id="nick" class="author" href="http://vk.com/id59234599" data-from-id="59234599" data-post-id="59234599_4147" data-post-click-type="post_owner_link">Дмитрий Антоник</a></h6>
+					<div class="post_date"><span class="post_date">вчера в 23:43</span></div>
+				</div>
+			</div>
+			<div class="mt-5"><iframe width="280" height="157" src="https://www.youtube.com/embed/qV21BT1xfbk" frameborder="0" allow="autoplay" allowfullscreen></iframe></div>
+		</div>
+
+		<div class="com-text container justify-content-center align-items-center">
+				<div class="container text-left">
+					<div class="row justify-content-end my-5">
+						<div class="col-9 text-center">
+							<h1>Настройки</h1>
+						</div>
 					</div>
-
-					<div id="main">
-						<div id="textcolor2"><h2>Вы подписаны</h2></div>
-						<label class="container">Вкл/Выкл
-							<input id="ColorOn2" type="checkbox">
-							<span class="checkbox"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Ничего
-						  <input type="radio" checked name="line2" id="none2">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Подчеркнуть
-						  <input type="radio" name="line2" id="under_line2">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Зачеркнуть
-						  <input type="radio" name="line2" id="through_line2">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<input type="button" id="color2" value="Установить цвет">
+					<div class="row justify-content-end mb-5">
+						<div class="col-3">
+							<div class="row justify-content">
+								<div class="col">
+									<div id="textcolor1"><h6>В друзьях</h6></div>
+								</div>
+							</div>
+							<div class="row justify-content-start">
+								<div class="col-10">
+									<label class="checkbox_container">Вкл/Выкл
+										<input id="ColorOn1" type="checkbox">
+										<span class="checkbox"></span>
+									</label>
+								</div>
+							</div>
+							<div id="menu1">
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Ничего
+											<input type="radio" checked name="line1" id="none1">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Подчеркнуть
+											<input type="radio" name="line1" id="under_line1">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+								<div class="col-10">
+									<label class="checkbox_container">Зачеркнуть
+										<input type="radio" name="line1" id="through_line1">
+										<span class="radio"></span>
+									</label>
+								</div>
+							</div>
+							</div>
+							<div class="row justify-content">
+								<div class="col">
+									<input type="button" id="color1" value="Установить цвет">
+								</div>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="row justify-content">
+								<div class="col">
+									<div id="textcolor2"><h6>Вы подписаны</h6></div>
+								</div>
+							</div>
+							<div class="row justify-content-start">
+								<div class="col-10">
+									<label class="checkbox_container">Вкл/Выкл
+										<input id="ColorOn2" type="checkbox">
+										<span class="checkbox"></span>
+									</label>
+								</div>
+							</div>
+							<div id="menu2">
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Ничего
+											<input type="radio" checked name="line2" id="none2">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Подчеркнуть
+											<input type="radio" name="line2" id="under_line2">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+								<div class="col-10">
+									<label class="checkbox_container">Зачеркнуть
+										<input type="radio" name="line2" id="through_line2">
+										<span class="radio"></span>
+									</label>
+								</div>
+								</div>
+							</div>
+							<div class="row justify-content">
+								<div class="col">
+									<input type="button" id="color2" value="Установить цвет">
+								</div>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="row justify-content">
+								<div class="col">
+									<div id="textcolor3"><h6>Подписан(а) на вас</h6></div>
+								</div>
+							</div>
+							<div class="row justify-content-start">
+								<div class="col-10">
+									<label class="checkbox_container">Вкл/Выкл
+										<input id="ColorOn3" type="checkbox">
+										<span class="checkbox"></span>
+									</label>
+								</div>
+							</div>
+							<div id="menu3">
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Ничего
+											<input type="radio" checked name="line3" id="none3">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Подчеркнуть
+											<input type="radio" name="line3" id="under_line3">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+								<div class="col-10">
+									<label class="checkbox_container">Зачеркнуть
+										<input type="radio" name="line3" id="through_line3">
+										<span class="radio"></span>
+									</label>
+								</div>
+							</div>
+							</div>
+							<div class="row justify-content">
+								<div class="col">
+									<input type="button" id="color3" value="Установить цвет">
+								</div>
+							</div>
+						</div>
 					</div>
-
-					<div id="main">
-						<div id="textcolor3"><h2>Подписан(а) на вас</h2></div>
-						<label class="container">Вкл/Выкл
-							<input id="ColorOn3" type="checkbox">
-							<span class="checkbox"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Ничего
-						  <input type="radio" checked name="line3" id="none3">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Подчеркнуть
-						  <input type="radio" name="line3" id="under_line3">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Зачеркнуть
-						  <input type="radio" name="line3" id="through_line3">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<input type="button" id="color3" value="Установить цвет">
+					<div class="row justify-content-end mb-5">
+						<div class="col-3">
+							<div class="row justify-content">
+								<div class="col">
+									<div id="textcolor4"><h6>Не в друзьях</h6></div>
+								</div>
+							</div>
+							<div class="row justify-content-start">
+								<div class="col-10">
+									<label class="checkbox_container">Вкл/Выкл
+										<input id="ColorOn4" type="checkbox">
+										<span class="checkbox"></span>
+									</label>
+								</div>
+							</div>
+							<div id="menu4">
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Ничего
+											<input type="radio" checked name="line4" id="none4">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Подчеркнуть
+											<input type="radio" name="line4" id="under_line4">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+								<div class="col-10">
+									<label class="checkbox_container">Зачеркнуть
+										<input type="radio" name="line4" id="through_line4">
+										<span class="radio"></span>
+									</label>
+								</div>
+							</div>
+							</div>
+							<div class="row justify-content">
+								<div class="col">
+									<input type="button" id="color4" value="Установить цвет">
+								</div>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="row justify-content">
+								<div class="col">
+									<div id="textcolor5"><h6>У вас в ЧС</h6></div>
+								</div>
+							</div>
+							<div class="row justify-content-start">
+								<div class="col-10">
+									<label class="checkbox_container">Вкл/Выкл
+										<input id="ColorOn5" type="checkbox">
+										<span class="checkbox"></span>
+									</label>
+								</div>
+							</div>
+							<div id="menu5">
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Ничего
+											<input type="radio" checked name="line5" id="none5">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Подчеркнуть
+											<input type="radio" name="line5" id="under_line5">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+								<div class="col-10">
+									<label class="checkbox_container">Зачеркнуть
+										<input type="radio" name="line5" id="through_line5">
+										<span class="radio"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+							<div class="row justify-content">
+								<div class="col">
+									<input type="button" id="color5" value="Установить цвет">
+								</div>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="row justify-content">
+								<div class="col">
+									<div id="textcolor6"><h6>Вы в ЧС</h6></div>
+								</div>
+							</div>
+							<div class="row justify-content-start">
+								<div class="col-10">
+									<label class="checkbox_container">Вкл/Выкл
+										<input id="ColorOn6" type="checkbox">
+										<span class="checkbox"></span>
+									</label>
+								</div>
+							</div>
+							<div id="menu6">
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Ничего
+											<input type="radio" checked name="line6" id="none6">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+									<div class="col-10">
+										<label class="checkbox_container">Подчеркнуть
+											<input type="radio" name="line6" id="under_line6">
+											<span class="radio"></span>
+										</label>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+								<div class="col-10">
+									<label class="checkbox_container">Зачеркнуть
+										<input type="radio" name="line6" id="through_line6">
+										<span class="radio"></span>
+									</label>
+								</div>
+							</div>
+							</div>
+							<div class="row justify-content">
+								<div class="col">
+									<input type="button" id="color6" value="Установить цвет">
+								</div>
+							</div>
+						</div>
 					</div>
+					<div class="row justify-content-end mb-5">
+						<div class="col-3">
+							<div class="row justify-content">
+								<div class="col">
+									<div id="textcolor7"><h6>Взаимный ЧС</h6></div>
+								</div>
+							</div>
+								<div class="row justify-content-start">
+									<div class="col-10">
+										<label class="checkbox_container">Вкл/Выкл
+											<input id="ColorOn7" type="checkbox">
+											<span class="checkbox"></span>
+										</label>
+									</div>
+								</div>
+								<div id="menu7">
+									<div class="row justify-content-center">
+										<div class="col-10">
+											<label class="checkbox_container">Ничего
+												<input type="radio" checked name="line7" id="none7">
+												<span class="radio"></span>
+											</label>
+										</div>
+									</div>
+									<div class="row justify-content-center">
+										<div class="col-10">
+											<label class="checkbox_container">Подчеркнуть
+												<input type="radio" name="line7" id="under_line7">
+												<span class="radio"></span>
+											</label>
+										</div>
+									</div>
+									<div class="row justify-content-center">
+										<div class="col-10">
+										<label class="checkbox_container">Зачеркнуть
+											<input type="radio" name="line7" id="through_line7">
+											<span class="radio"></span>
+										</label>
+									</div>
+									</div>
+								</div>
+							<div class="row justify-content">
+								<div class="col">
+									<input type="button" id="color7" value="Установить цвет">
+								</div>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="row justify-content">
+								<div class="col">
+									<div id="online">
+										<h6 style="display:inline-block">Показывать онлайн</h6>
+										<div class="vk_online"></div>
+									</div>
+								</div>
+							</div>
+							<div class="row justify-content-start">
+								<div class="col-10">
+									<label class="checkbox_container">Вкл/Выкл
+										<input id="OnlineOn" type="checkbox">
+										<span class="checkbox"></span>
+									</label>
+								</div>
+							</div>
+							<div id="MobileOnlineOn_Container" class="row justify-content">
+								<div id="mobile_online" class="col-12">
+									<div>
+										<h6 style="display:inline-block">Отдельно мобильную</h6>
+										<div class="vk_mobile_online"></div>
+									</div>
+								</div>
+								<div class="col-10">
+									<label class="checkbox_container">Вкл/Выкл
+										<input id="MobileOnlineOn" type="checkbox">
+										<span class="checkbox"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-3">
+							<div><h6>Всплывающее окно</h6></div>
+							<label class="checkbox_container">Вкл/Выкл
+								<input id="PopUpNotify" type="checkbox">
+								<span class="checkbox"></span>
+							</label>
 
-					<div id="main">
-						<div id="textcolor4"><h2>Не в друзьях</h2></div>
-						<label class="container">Вкл/Выкл
-							<input id="ColorOn4" type="checkbox">
-							<span class="checkbox"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Ничего
-						  <input type="radio" checked name="line4" id="none4">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Подчеркнуть
-						  <input type="radio" name="line4" id="under_line4">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Зачеркнуть
-						  <input type="radio" name="line4" id="through_line4">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<input type="button" id="color4" value="Установить цвет">
-					</div>
-
-					<div id="main">
-						<div id="textcolor5"><h2>У вас в ЧС</h2></div>
-						<label class="container">Вкл/Выкл
-							<input id="ColorOn5" type="checkbox">
-							<span class="checkbox"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Ничего
-						  <input type="radio" checked name="line5" id="none5">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Подчеркнуть
-						  <input type="radio" name="line5" id="under_line5">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Зачеркнуть
-						  <input type="radio" name="line5" id="through_line5">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<input type="button" id="color5" value="Установить цвет">
-					</div>
-
-					<div id="main">
-						<div id="textcolor6"><h2>Вы в ЧС</h2></div>
-						<label class="container">Вкл/Выкл
-							<input id="ColorOn6" type="checkbox">
-							<span class="checkbox"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Ничего
-						  <input type="radio" checked name="line6" id="none6">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Подчеркнуть
-						  <input type="radio" name="line6" id="under_line6">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Зачеркнуть
-						  <input type="radio" name="line6" id="through_line6">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<input type="button" id="color6" value="Установить цвет">
-					</div>
-
-					<div id="main">
-						<div id="textcolor7"><h2>Взаимный ЧС</h2></div>
-						<label class="container">Вкл/Выкл
-							<input id="ColorOn7" type="checkbox">
-							<span class="checkbox"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Ничего
-						  <input type="radio" checked name="line7" id="none7">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Подчеркнуть
-						  <input type="radio" name="line7" id="under_line7">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<label class="container">Зачеркнуть
-						  <input type="radio" name="line7" id="through_line7">
-						  <span class="radio"></span>
-						</label>
-						<br>
-						<br>
-						<input type="button" id="color7" value="Установить цвет">
-					</div>
-
-					<div id="main">
-						<div ><h2 id="online">Показывать онлайн</h2></div>
-						<label class="container">Вкл/Выкл
-							<input id="OnlineOn" type="checkbox">
-							<span class="checkbox"></span>
-						</label>
-						<br>
-						<br>
-						<div id="MobileOnlineOn_Container" style="display: none">
-							<h3 id="mobile_online">Отдельно мобильную</h3>
-							<label class="container">Вкл/Выкл
-								<input id="MobileOnlineOn" type="checkbox">
+							<div><h6>Отображение в консоли</h6></div>
+							<label class="checkbox_container">Вкл/Выкл
+								<input id="ConsoleLog" type="checkbox">
 								<span class="checkbox"></span>
 							</label>
 						</div>
 					</div>
-
-					<div id="main">
-						<div><h2>Всплывающее окно</h2></div>
-						<label class="container">Вкл/Выкл
-							<input id="PopUpNotify" type="checkbox">
-							<span class="checkbox"></span>
-						</label>
-
-						<div><h2>Отображение в консоли</h2></div>
-						<label class="container">Вкл/Выкл
-							<input id="ConsoleLog" type="checkbox">
-							<span class="checkbox"></span>
-						</label>
+					<div class="row justify-content-end mb-2 text-center">
+						<div class="col-9">
+							<input type="button" id="clear" value="Очистить">
+						</div>
 					</div>
-
-				</div>
-				<div>
-					<input type="button" id="clear" value="Очистить">
-					<br><br>
-					<input type="button" id="autorization" value="Авторизоваться">
-					<input type="button" id="deautorization" value="Деавторизоваться"><br><br>
-					<div id="console" style="color:green;"></div>
-				</div>
-			</div>
-			<br>
-			<div class="picker" id="primary_block">
-				<div id="line">
-					<div id="arrows">
-						<div class="left_arrow"></div>
-						<div class="right_arrow"></div>
+					<div class="row justify-content-end mb-2 text-center">
+						<div class="col-9">
+							<input class="mr-2" type="button" id="autorization" value="Авторизоваться"><input class="ml-2" type="button" id="deautorization" value="Деавторизоваться">
+						</div>
+					</div>
+					<div class="row justify-content-end mb-5 text-center">
+						<div class="col-9">
+							<div id="console" style="color:green;"></div>
+						</div>
 					</div>
 				</div>
-				<div id="block_picker">
-					<img src="color_picker/bgGradient.png" class="bk_img"><div class="circle" id="circle"></div>
-				</div>
-				<div id="out_color" class="out_color"></div>
-				<div id="out_html_color" class="out_html_color"></div>
-
-				<div class="post_header">
-					<a class="post_image" href="http://vk.com/id59234599">
-						<img src="https://pp.userapi.com/c626917/v626917599/4e6b7/RAHFAoo6-7I.jpg" data-post-id="59234599_4147" data-post-click-type="post_owner_img" width="50" height="50" class="post_img">
-					</a>
-
-					<div class="post_header_info">
-						<h5 class="post_author"><a id="nick" class="author" href="http://vk.com/id59234599" data-from-id="59234599" data-post-id="59234599_4147" data-post-click-type="post_owner_link">Дмитрий Антоник</a></h5>
-						<div class="post_date"><span class="post_date">вчера в 23:43</span></div>
-					</div>
-				</div>
-			</div>
-
-			<div>
-				<iframe width="280" height="157" src="https://www.youtube.com/embed/qV21BT1xfbk" frameborder="0" gesture="media" allowfullscreen></iframe>
-			</div>
-
-
 		</div>
+		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="js/popper.min.js"></script>
+		<script type="text/javascript" src="js/options.js"></script>
 	</body>
-	<script src="options.js"></script>
 </html>

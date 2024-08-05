@@ -49,37 +49,65 @@
 
 html { height: 100%; }
 body {
-  background-image: url(http://kr3nd31.ru/images/kr3nd31.jpg); /* ���� � �������� ����������� */
+  /*background-image: url(http://kr3nd31.ru/images/kr3nd31.jpg); /* ���� � �������� ����������� */
   background-position: center center; /* ��������� ���� */
   background-size: contain;
   background-attachment:fixed;
   background-repeat: no-repeat; /* �������� ���������� ���� */
   background-color: #f2f2f2;
-
 }
 
-#main {
-	color: #414141;
-    width: 40%; /* ������ ���� � �������� */
-    margin: 5% auto; /* ������ ����� � ������ */
-    background:  rgba(242,242,242, 0.85); /* ���� ���� */
-    padding: 10px; /* ���� ������ ������ */
-	border: 3px solid #414141; /* ��������� ������� */
-    text-align: center; /* ������������ ����������� ���� �� ������ ���� */
-	font-family: 'Comfortaa';
-   }
+#p_prldr{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right:0;
+  bottom:0;
+  background: #f2f2f2;;
+  z-index: 2002;
+}
+
+.contpre small{font-size:25px;}
+
+.contpre{
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  margin-left: -125px;
+  margin-top: -75px;
+  color: #fff;
+  font-size: 40px;
+  letter-spacing: -2px;
+  text-align: center;
+  line-height: 35px;
+}
+
+#p_prldr .svg_anm {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: url('/logo.svg') center center no-repeat;
+  background-size: 200px;
+  margin: 25px 0 0 -100px;
+}
+
+.com-text{
+  font-family: 'Comfortaa';
+}
 
 input, textarea, select, .checkbox, .radio, .button{
-    font-family: 'Comfortaa';
-    background-color: rgba(242,242,242, 0.85);
-    color:#414141;
-    border: 2px solid #414141;
-    box-shadow:none;
-    font-weight:600;
-    font-size:14px;
-    padding:6px;
-    margin:0;
-    cursor:pointer
+  font-family: 'Comfortaa';
+  background-color: rgba(242,242,242, 0.85);
+  color:#414141;
+  border: 2px solid #414141;
+  box-shadow:none;
+  font-weight:600;
+  font-size:14px;
+  padding:6px;
+  margin:0;
+  cursor:pointer
 }
 
 .button{
@@ -106,7 +134,7 @@ input:disabled{
 
 
 /* Customize the label (the container) */
-.container {
+.checkbox_container {
   position: relative;
   padding-top: 3px;
   padding-left: 23px;
@@ -119,12 +147,12 @@ input:disabled{
   user-select: none;
 }
 
-.container[disabled] {
+.checkbox_container[disabled] {
     opacity: 0.5;
 }
 
 /* Hide the browser's default checkbox */
-.container input {
+.checkbox_container input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -136,17 +164,17 @@ input:disabled{
   position: absolute;
   top: 0;
   left: 0;
-  height: 14px;
-  width: 14px;
+  height: 18px;
+  width: 18px;
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkbox, .container:hover input ~ .radio {
+.checkbox_container:hover input ~ .checkbox, .checkbox_container:hover input ~ .radio {
   background-color: #b0b0b0;
 }
 
 /* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkbox, .container input:checked ~ .radio {
+.checkbox_container input:checked ~ .checkbox, .checkbox_container input:checked ~ .radio {
   background-color: #f2f2f2;
 }
 
@@ -158,16 +186,16 @@ input:disabled{
 }
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkbox:after, .container input:checked ~ .radio:after {
+.checkbox_container input:checked ~ .checkbox:after, .checkbox_container input:checked ~ .radio:after {
   display: block;
 }
 
 /* Style the checkmark/indicator */
-.container .checkbox:after {
+.checkbox_container .checkbox:after {
   left: 4px;
   top: 1px;
-  width: 4px;
-  height: 7px;
+  width: 6px;
+  height: 9px;
   border: solid #414141;
   border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);
@@ -180,12 +208,12 @@ input:disabled{
     position: absolute;
     top: 0;
     left: 0;
-    height: 14px;
-    width: 14px;
+    height: 18px;
+    width: 18px;
     border-radius: 50%;
 }
 
-.container .radio:after {
+.checkbox_container .radio:after {
  	top: 2px;
     left: 2px;
     width: 10px;
@@ -197,8 +225,27 @@ input:disabled{
 
 A {
 	color: #42648b;
-    text-decoration: none; /* ������� ������������� ��� ������ */
+    text-decoration: none;
    }
+
+.vk_online{
+  background: #8ac176;
+  display: inline-block;
+  bottom: 0;
+  width: 8px;
+  margin-left: 4px;
+  border-radius: 100%;
+  height: 8px;
+}
+
+.vk_mobile_online{
+  display: inline-block;
+  margin-left: 4px;
+  border-radius: 3px;
+  bottom: 0;width: 8px;
+  height: 12px;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgNyAxMSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0iIzhBQzE3NiIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0ib25saW5lIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjAzLjAwMDAwMCwgLTQyMi4wMDAwMDApIj4KICAgICAgICAgICAgPHBhdGggZD0iTTIwMyw0MjMuNTA2NDM5IEMyMDMsNDIyLjY3NDQ1NiAyMDMuNjcxMTg5LDQyMiAyMDQuNTAxNjc2LDQyMiBMMjA4LjQ5ODMyNCw0MjIgQzIwOS4zMjc2NzcsNDIyIDIxMCw0MjIuNjcxNTQxIDIxMCw0MjMuNTA2NDM5IEwyMTAsNDMxLjQ5MzU2MSBDMjEwLDQzMi4zMjU1NDQgMjA5LjMyODgxMSw0MzMgMjA4LjQ5ODMyNCw0MzMgTDIwNC41MDE2NzYsNDMzIEMyMDMuNjcyMzIzLDQzMyAyMDMsNDMyLjMyODQ1OSAyMDMsNDMxLjQ5MzU2MSBMMjAzLDQyMy41MDY0MzkgWiBNMjA0LDQyNCBMMjA5LDQyNCBMMjA5LDQzMCBMMjA0LDQzMCBMMjA0LDQyNCBaIiBpZD0ibW9iaWxlX20iLz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==);
+}
 
 .post_header{margin: 10px}
 .post_img{display:block;float:left;width:50px;height:50px;border-radius:50%;vertical-align:top}

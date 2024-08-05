@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-150 -150 1300.0 1300.0">
+  <defs>
+    <style>.cls-1{fill:#1f191a;}.cls-2{fill:#f2f2f2;}</style>
+  </defs>
+  <title>Logo</title>
+
+  <g id="Layer1" data-name="Layer1">
+    <animateTransform attributeName="transform"
+       attributeType="XML"
+       type="rotate"
+       from="0 502.2 569.97"
+       to="360 502.2 569.97"
+       dur="1.5s"
+       repeatCount="indefinite"
+      />
+      <animateMotion path="M 0 0 V 20 Z" dur="20s" repeatCount="indefinite" />
+    <polygon class="cls-1" points="502.35 0 1004.69 870.09 0 870.09 502.35 0"/>
+    <polygon class="cls-2" points="41.24 846.28 502.35 47.62 963.45 846.28 41.24 846.28"/>
+  </g>
+  <g id="Layer2" data-name="Layer2">
+    <path class="cls-1" d="M1569,1075.11s-117.37,135.12-262.14,135.12-262.14-135.12-262.14-135.12S1162.08,940,1306.86,940,1569,1075.11,1569,1075.11Z" transform="translate(-804.65 -505.14)"/>
+    <path class="cls-2" d="M1306.86,1186.42c-68.11,0-130.38-34-170.62-62.48a489.71,489.71,0,0,1-58.48-48.83,489.71,489.71,0,0,1,58.48-48.83c40.24-28.51,102.51-62.49,170.62-62.49,103.89,0,194.41,77.39,229.1,111.32a490.67,490.67,0,0,1-58.48,48.83C1437.24,1152.44,1375,1186.42,1306.86,1186.42Z" transform="translate(-804.65 -505.14)"/>
+
+    <circle class="cls-1" cx="502.2" cy="569.97" r="135.12"/>
+    <circle class="cls-2" cx="1306.86" cy="1075.11" r="111.31" transform="translate(-1182.1 733.84) rotate(-45)"/>
+    <circle class="cls-1" cx="502.2" cy="569.97" r="70.37"/>
+  </g>
+</svg>
