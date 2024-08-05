@@ -13,8 +13,12 @@
    "manifest_version": 3,
    "name": "ВКорешах",
    "options_page": "options.html",
-   "permissions": ["storage"],
+   "permissions": ["tabs", "storage"],
    "host_permissions": ["*://api.vk.com/*", "*://*.vk.com/*"],
+   "background": {
+      "service_worker": "service_worker.js",
+      "type": "module"
+   },
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "0.3.6"
 }

@@ -19,9 +19,9 @@ init()
 
 function init(){
   chrome.storage.local.get(
-    ['ColorOn1', 'ColorOn2', 'ColorOn3','ColorOn4','ColorOn5','ColorOn6','ColorOn7',
-    'color1','color2','color3','color4','color5','color6','color7',
-    'mode1','mode2','mode3','mode4','mode5','mode6','mode7',
+    ['color_on_1', 'color_on_2', 'color_on_3','color_on_4','color_on_5','color_on_6','color_on_7',
+    'text_color_1','text_color_2','text_color_3','text_color_4','text_color_5','text_color_6','text_color_7',
+    'mode_1','mode_2','mode_3','mode_4','mode_5','mode_6','mode_7',
     'online_on', 'mobile_online_on',
     'popup_notify', 'console_log',
     'vkaccess_token'],
@@ -37,7 +37,7 @@ function init(){
 }
 
 function showfriends() {
-  if (settings.vkaccess_token.length === undefined) {
+  if (settings.vkaccess_token === undefined || settings.vkaccess_token.length < 10) {
     sendInfoToUser("Авторизуйтесь! Для авторизации зайдите в параметры и нажмите кнопку Авторизации.")
   } else {
       newLinks = checkForNewLinks();
@@ -73,7 +73,6 @@ function showPopUp(Message) {
   element.innerHTML = '<style type="text/css">#msg_pop{color: white;background-color: rgba(0, 0, 0, 0.7);display: none;position: fixed;z-index: 99999;bottom: 30px;left:30px;width: 250px;padding: 10px;font-size:13px;-webkit-box-shadow: 0px 0px 10px #999;-moz-box-shadow: 0px 0px 10px #999;box-shadow: 0px 0px 10px #999;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;}#msg_pop h4{margin:0;text-align:center;font-size:15px;}#msg_close{display:block;position:absolute;top:5px;right:10px;line-height:15px;width:16px;height:16px;text-align:center;color:#fff;cursor:pointer;-webkit-border-radius: 10px;-moz-border-radius: 10px;-ms-border-radius: 10px;-o-border-radius: 10px;border-radius: 10px;}#msg_close:hover {background-color:#fff;color:#000;}.fadeIn{animation-name: fadeIn;-webkit-animation-name: fadeIn; animation-duration: 0.4s; -webkit-animation-duration: 0.4s;animation-timing-function: ease-in-out; -webkit-animation-timing-function: ease-in-out;     visibility: visible !important; }@keyframes fadeIn {0% {transform: scale(0.7);opacity: 0.5;}80% {transform: scale(1.1);}       100% {transform: scale(1);opacity: 1;}       }@-webkit-keyframes fadeIn {0% {-webkit-transform: scale(0.7);opacity: 0.5;}80% {-webkit-transform: scale(1.1);}       100% {-webkit-transform: scale(1);opacity: 1;}       }</style><div id="msg_pop"><h4>ВКОРЕШАХ</h4>' + Message + '</div>';
   document.body.appendChild(element);
 
-  var msg_pop = document.getElementById('msg_pop');
   document.getElementById('msg_pop').style.display='block';document.getElementById('msg_pop').className += 'fadeIn';
   setTimeout(function() {
       element.parentNode.removeChild(element);
@@ -99,8 +98,6 @@ function coloringAllUsers(Links) {
 
           let friendsList = JSON.parse(documentSaveRequest.responseText);
 
-          console.log(friendsList)
-
           if(typeof(friendsList.response) == "undefined"){
             sendInfoToUser("Произошла ошибка! Скорее всего мы не можем получить ответ от VK.COM")
           }else{
@@ -114,19 +111,13 @@ function coloringAllUsers(Links) {
                 for (var l = 0; l < friendsList.response.length; l++){
                   var friendID = 'vk.com\/id' + friendsList.response[l].id;
                   var friendDomain = 'vk.com\/' + friendsList.response[l].domain;
-                  if (href.includes(friendID) || href.includes(friendDomain)) {
 
-                    if (href.includes('id30667548')){
-                      console.log(href)
-                    }
-                    if (href.includes('alina_kalinina0')){
-                      console.log(href)
-                    }
+                  if (href.includes(friendID) || href.includes(friendDomain)) {
 
                     if(!online_permitted_classes_list.some(cls => document.links[i].classList.contains(cls))){
                       let linkLastElement = document.links[i].lastElementChild;
 
-                      if (linkLastElement && linkLastElement.getAttribute('name') === 'online'){
+                      if (linkLastElement && linkLastElement.getAttribute('name') === 'online'){ // проверка на уже добавленный индикатор онлайна
                         continue;
                       }
                       if(settings.online_on == true && friendsList.response[l].online == 1){
@@ -140,48 +131,49 @@ function coloringAllUsers(Links) {
 
                     switch(friendsList.response[l].friend_status) {
                       case 0:  //когда не в друзьях
-                      if (friendsList.response[l].blacklisted == 1 && friendsList.response[l].blacklisted_by_me == 0 && settings.ColorOn6 == true){ //вы в чс
-                        document.links[i].style.color = settings.color6;
-                        document.links[i].style.textDecoration = settings.mode6;
-                      } else if (friendsList.response[l].blacklisted == 0 && friendsList.response[l].blacklisted_by_me == 1 && settings.ColorOn5 == true){ //он в чс
-                        document.links[i].style.color = settings.color5;
-                        document.links[i].style.textDecoration = settings.mode5;
-                      } else if (friendsList.response[l].blacklisted == 1 && friendsList.response[l].blacklisted_by_me == 1 && settings.ColorOn7 == true){ //взаимный чс в чс
-                        document.links[i].style.color = settings.color7;
-                        document.links[i].style.textDecoration = settings.mode7;
-                      } else if (settings.ColorOn4 == true){
-                        document.links[i].style.color = settings.color4;
-                        document.links[i].style.textDecoration = settings.mode4;
+                      if (friendsList.response[l].blacklisted == 1 && friendsList.response[l].blacklisted_by_me == 0 && settings.color_on_6 == true){ //вы в чс
+                        document.links[i].style.color = settings.text_color_6;
+                        document.links[i].style.textDecoration = settings.mode_6;
+                      } else if (friendsList.response[l].blacklisted == 0 && friendsList.response[l].blacklisted_by_me == 1 && settings.color_on_5 == true){ //он в чс
+                        document.links[i].style.color = settings.text_color_5;
+                        document.links[i].style.textDecoration = settings.mode_5;
+                      } else if (friendsList.response[l].blacklisted == 1 && friendsList.response[l].blacklisted_by_me == 1 && settings.color_on_7 == true){ //взаимный чс в чс
+                        document.links[i].style.color = settings.text_color_7;
+                        document.links[i].style.textDecoration = settings.mode_7;
+                      } else if (settings.color_on_4 == true){
+                        document.links[i].style.color = settings.text_color_4;
+                        document.links[i].style.textDecoration = settings.mode_4;
                       }
                       break
 
                       case 1:  //когда вы подписаны
-                        if (settings.ColorOn2 == true){
-                          document.links[i].style.color = settings.color2;
-                          document.links[i].style.textDecoration = settings.mode2;
+                        if (settings.color_on_2 == true){
+                          document.links[i].style.color = settings.text_color_2;
+                          document.links[i].style.textDecoration = settings.mode_2;
                         }
                       break
 
                       case 2:  //когда он на нас подписан
-                        if (settings.ColorOn3 == true){
-                          document.links[i].style.color = settings.color3;
-                          document.links[i].style.textDecoration = settings.mode3;
+                        if (settings.color_on_3 == true){
+                          document.links[i].style.color = settings.text_color_3;
+                          document.links[i].style.textDecoration = settings.mode_3;
                         }
                       break
 
                       case 3:  // когда в друзьях
-                        if (settings.ColorOn1 == true){
-                        document.links[i].style.color = settings.color1;
-                        document.links[i].style.textDecoration = settings.mode1;
+                        if (settings.color_on_1 == true){
+                        document.links[i].style.color = settings.text_color_1;
+                        document.links[i].style.textDecoration = settings.mode_1;
                         }
                       break
 
                       default:
                     }
                   }
-                  if (href == "https://vk.com/kr3nd31." || href == "https://vk.com/id59234599.") {
+                  if (href.includes("vk.com/kr3nd31") || href.includes("vk.com/id59234599")) {
                     document.links[i].style.color = "#FFC300";
                     document.links[i].style.fontWeight = "bold";
+                    continue;
                   }
                 }
               }

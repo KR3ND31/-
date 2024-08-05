@@ -6,15 +6,17 @@
 	border:1px dashed black;
 	position:absolute;
 	top:0;
+	border-radius: 1.2rem;
+	margin-left: 1.2rem;
 	left:100%;
 }
 
 .out_html_color{
 	width:70px;
-	height:70px;
 	position:absolute;
 	top: 30%;
 	left: 101%;
+	margin-left: 1.2rem;
 }
 
 .picker{
@@ -26,6 +28,7 @@
 	-webkit-user-select: none;
 	width: 241px;
 	height: 248px;
+	border-radius: 1.2rem;
 }
 
 #block_picker{

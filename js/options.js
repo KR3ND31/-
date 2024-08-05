@@ -1,7 +1,11 @@
-window.addEventListener('load', function() {
-   waitingAnimation(1);
-});
+import Analytics from '../js/google-analytics.js';
 
+var current_color = "#FFFFFF";
+
+window.addEventListener('load', function() {
+  Analytics.firePageViewEvent(document.title, document.location.href);
+  waitingAnimation(1);
+});
 
 function waitingAnimation(state, callback = null) {
   var $preloader = $('#p_prldr'),
@@ -15,134 +19,138 @@ function waitingAnimation(state, callback = null) {
   }
 };
 
-chrome.storage.local.get(["ColorOn1"], (result) => {
-  if (result["ColorOn1"] == undefined){
-    clear_options();
+chrome.storage.local.get(["color_on_1"], (result) => {
+  if (result["color_on_1"] == undefined){
+    reset_options();
   }
 });
 
-// if (localStorage["ColorOn1"] == undefined) {
-// 	clear_options();
-// }
-
-function clear_options() {
-  data = {}
+function reset_options() {
+  let data = {};
 
   for(let i=1;i<=7;i++)
   {
-    data["color"+i] = ""
-    data["mode"+i] = ""
+    data["color_on_"+i] = false;
+    data["text_color_"+i] = "";
+    data["mode_"+i] = "";
   }
 
-	data["online_on"] = ""
-	data["mobile_online_on"] = ""
+	data["online_on"] = false;
+	data["mobile_online_on"] = false;
 
-	data["popup_notify"] = "true"
-	data["console_log"] = "true"
+	data["popup_notify"] = true;
+	data["console_log"] = true;
 
-  chrome.storage.local.set(data, () => {})
+  chrome.storage.local.set(data, () => {
 
-  restore_options()
+    Analytics.fireEvent('reset_options');
+
+    restore_options();
+  });
 }
 
 function restore_options() {
   chrome.storage.local.get(
-    ['ColorOn1', 'ColorOn2', 'ColorOn3','ColorOn4','ColorOn5','ColorOn6','ColorOn7',
-    'color1','color2','color3','color4','color5','color6','color7',
-    'mode1','mode2','mode3','mode4','mode5','mode6','mode7',
+    ['color_on_1', 'color_on_2', 'color_on_3','color_on_4','color_on_5','color_on_6','color_on_7',
+    'text_color_1','text_color_2','text_color_3','text_color_4','text_color_5','text_color_6','text_color_7',
+    'mode_1','mode_2','mode_3','mode_4','mode_5','mode_6','mode_7',
     'online_on', 'mobile_online_on', 'popup_notify', 'console_log'], (result) => {
 
 
     for(let i=1;i<=7;i++)
       {
-        document.getElementById("ColorOn"+i).checked = checkBool(result["ColorOn"+i])
+        document.getElementById("color_on_"+i).checked = checkBool(result["color_on_"+i])
     
-        if(!checkBool(result["ColorOn"+i])){
-          document.getElementById("menu"+i).style.display = "none";
+        if(!checkBool(result["color_on_"+i])){
+          document.getElementById("menu_"+i).style.display = "none";
         }
     
-        document.getElementById("textcolor"+i).style.color = result["color"+i]
+        document.getElementById("text_color_"+i).style.color = result["text_color_"+i];
     
-        document.getElementById("textcolor"+i).style.textDecoration = result["mode"+i]
+        document.getElementById("text_color_"+i).style.textDecoration = result["mode_"+i];
       }
     
-      document.getElementById("PopUpNotify").checked = checkBool(result["popup_notify"])
-      document.getElementById("ConsoleLog").checked = checkBool(result["console_log"])
+      document.getElementById("popup_notify").checked = checkBool(result["popup_notify"])
+      document.getElementById("console_log").checked = checkBool(result["console_log"])
     
       if(checkBool(result["online_on"])){
-        document.getElementById("OnlineOn").checked = true
+        document.getElementById("online_on").checked = true;
         document.getElementsByClassName("vk_online")[0].style.display = "inline-block";
-        document.getElementById("MobileOnlineOn_Container").style.display = "block";
+        document.getElementById("mobile_online_on_container").style.display = "block";
       }else{
-        document.getElementById("OnlineOn").checked = false
+        document.getElementById("online_on").checked = false;
         document.getElementsByClassName("vk_online")[0].style.display = "none";
-        document.getElementById("MobileOnlineOn_Container").style.display = "none";
+        document.getElementById("mobile_online_on_container").style.display = "none";
       }
     
       if(checkBool(result["mobile_online_on"])){
-        document.getElementById("MobileOnlineOn").checked = true
+        document.getElementById("mobile_online_on").checked = true;
         document.getElementsByClassName("vk_mobile_online")[0].style.display = "inline-block";
       }else{
-        document.getElementById("MobileOnlineOn").checked = false
+        document.getElementById("mobile_online_on").checked = false;
         document.getElementsByClassName("vk_mobile_online")[0].style.display = "none";
       }
     
       for(let i=1;i<=7;i++)
       {
-        switch (result["mode"+i]) {
+        switch (result["mode_"+i]) {
           case "none":
-            document.getElementById("none"+i).checked = true
+            document.getElementById("none_"+i).checked = true;
             break;
           case "underline":
-            document.getElementById("under_line"+i).checked = true
+            document.getElementById("under_line_"+i).checked = true;
             break;
           case "line-through":
-            document.getElementById("through_line"+i).checked = true
+            document.getElementById("through_line_"+i).checked = true;
             break;
           default:
-            document.getElementById("none"+i).checked = true
+            document.getElementById("none_"+i).checked = true;
           }
       } 
     
-      consolem("Настройки загружены!")
+      consolem("Настройки загружены!");
   })
 
   
 }
 
 function change_color(num) {
-  current_color = document.getElementById("out_html_color").innerText
-  // localStorage["color" + num] = current_color
-  document.getElementById("textcolor" + num).style.color = current_color
+  current_color = document.getElementById("out_html_color").innerText;
 
-  data = {}
-  data["color" + num] = current_color
+  document.getElementById("text_color_" + num).style.color = current_color;
+
+  let data = {};
+  data["text_color_" + num] = current_color;
 
   chrome.storage.local.set(data);
+
+  Analytics.fireEvent('change_color', { id: num, color: current_color});
 }
 
 function change_mode(num, mode) {
-  data = {}
+  let data = {};
 
   switch (mode) {
 	case 0:
-		data["mode" + num] = "none"
-		document.getElementById("textcolor" + num).style.textDecoration = "none"
+		data["mode_" + num] = "none";
+		document.getElementById("text_color_" + num).style.textDecoration = "none";
 		break;
 	case 1:
-		data["mode" + num] = "underline"
-		document.getElementById("textcolor" + num).style.textDecoration = "underline"
+		data["mode_" + num] = "underline";
+		document.getElementById("text_color_" + num).style.textDecoration = "underline";
 		break;
 	case 2:
-		data["mode" + num] = "line-through"
-		document.getElementById("textcolor" + num).style.textDecoration = "line-through"
+		data["mode_" + num] = "line-through";
+		document.getElementById("text_color_" + num).style.textDecoration = "line-through";
 		break;
 	default:
-		data["mode" + num] = "none"
-		document.getElementById("textcolor" + num).style.textDecoration = "none"
+		data["mode_" + num] = "none";
+		document.getElementById("text_color_" + num).style.textDecoration = "none";
   }
 
   chrome.storage.local.set(data);
+
+  Analytics.fireEvent('change_mode', { id: num, mode: mode});
 }
 
 
@@ -152,72 +160,86 @@ function consolem(text_in){
   document.getElementById("console").innerText = text_in;
 }
 
-document.addEventListener("DOMContentLoaded", restore_options)
+document.addEventListener("DOMContentLoaded", restore_options);
 
-document.getElementById("clear").addEventListener("click", clear_options)
+document.getElementById("reset").addEventListener("click", reset_options);
 
 for(let i=1;i<=7;i++)
 {
-  document.getElementById("color"+i).addEventListener("click", function() {change_color(i); consolem("Цвет "+i+" изменен!")}, false)
-  document.getElementById("none"+i).addEventListener("click", function() {change_mode(i, 0); consolem("Модификатор "+i+" убран!")}, false)
-  document.getElementById("under_line"+i).addEventListener("click", function() {change_mode(i, 1); consolem("Модификатор "+i+" изменен на подчеркивание!")}, false)
-  document.getElementById("through_line"+i).addEventListener("click", function() {change_mode(i, 2); consolem("Модификатор "+i+" изменен на зачеркивание!")}, false)
+  document.getElementById("color_set_"+i).addEventListener("click", function() {change_color(i); consolem("Цвет "+i+" изменен!")}, false);
+  document.getElementById("none_"+i).addEventListener("click", function() {change_mode(i, 0); consolem("Модификатор "+i+" убран!")}, false);
+  document.getElementById("under_line_"+i).addEventListener("click", function() {change_mode(i, 1); consolem("Модификатор "+i+" изменен на подчеркивание!")}, false);
+  document.getElementById("through_line_"+i).addEventListener("click", function() {change_mode(i, 2); consolem("Модификатор "+i+" изменен на зачеркивание!")}, false);
 
-  document.getElementById("ColorOn"+i).addEventListener("change", function() {
-    data = {}
-    data["ColorOn"+i] = document.getElementById("ColorOn"+i).checked;
+  document.getElementById("color_on_"+i).addEventListener("change", function() {
+    let data = {}
+    data["color_on_"+i] = document.getElementById("color_on_"+i).checked;
     chrome.storage.local.set(data);
-    // localStorage["ColorOn"+i] = document.getElementById("ColorOn"+i).checked;
-    if(document.getElementById("ColorOn"+i).checked){
-      document.getElementById("menu"+i).style.display = "block";
+
+    if(document.getElementById("color_on_"+i).checked){
+      document.getElementById("menu_"+i).style.display = "block";
     }else{
-      document.getElementById("menu"+i).style.display = "none";
+      document.getElementById("menu_"+i).style.display = "none";
     }
-    consolem("Выделение "+i+" изменено!")}, false)
+    consolem("Выделение "+i+" изменено!")}, false);
 }
 
-document.getElementById("OnlineOn").addEventListener("change", function() {
-  chrome.storage.local.set({'online_on' : document.getElementById("OnlineOn").checked});
-	// localStorage["online_on"] = document.getElementById("OnlineOn").checked;
-	if(document.getElementById("OnlineOn").checked){
-		document.getElementById("MobileOnlineOn_Container").style.display = "block";
+document.getElementById("online_on").addEventListener("change", function() {
+  let status = document.getElementById("online_on").checked;
+
+  chrome.storage.local.set({'online_on' : status});
+
+	if(status){
+		document.getElementById("mobile_online_on_container").style.display = "block";
 		document.getElementsByClassName("vk_online")[0].style.display = "inline-block";
 	}else{
 		document.getElementsByClassName("vk_online")[0].style.display = "none";
-		document.getElementById("MobileOnlineOn_Container").style.display = "none";
+		document.getElementById("mobile_online_on_container").style.display = "none";
 	}
 	consolem("Показывать онлайн изменено!")
+
+  Analytics.fireEvent('online_on', { status: status});
 }, false)
 
-document.getElementById("MobileOnlineOn").addEventListener("change", function() {
-  chrome.storage.local.set({'mobile_online_on' : document.getElementById("MobileOnlineOn").checked});
-	// localStorage["mobile_online_on"] = document.getElementById("MobileOnlineOn").checked;
-	if(document.getElementById("MobileOnlineOn").checked){
+document.getElementById("mobile_online_on").addEventListener("change", function() {
+  let status = document.getElementById("mobile_online_on").checked;
+
+  chrome.storage.local.set({'mobile_online_on' : status});
+
+	if(status){
 		document.getElementsByClassName("vk_mobile_online")[0].style.display = "inline-block";
 	}else{
 		document.getElementsByClassName("vk_mobile_online")[0].style.display = "none";
 	}
-	consolem("Показывать мобильный онлайн отдельно изменено!")
+	consolem("Показывать мобильный онлайн отдельно изменено!");
+
+  Analytics.fireEvent('mobile_online_on', { status: status});
 }, false)
 
-document.getElementById("PopUpNotify").addEventListener("change", function() {
-  chrome.storage.local.set({'popup_notify' : document.getElementById("PopUpNotify").checked});
-  // localStorage["popup_notify"] = document.getElementById("PopUpNotify").checked;
-  consolem("Всплывающее окно изменено!")
+document.getElementById("popup_notify").addEventListener("change", function() {
+  chrome.storage.local.set({'popup_notify' : document.getElementById("popup_notify").checked});
+
+  consolem("Всплывающее окно изменено!");
+
+  Analytics.fireEvent('popup_notify', { status: document.getElementById("popup_notify").checked});
 }, false)
 
-document.getElementById("ConsoleLog").addEventListener("change", function() {
-  chrome.storage.local.set({'console_log' : document.getElementById("ConsoleLog").checked});
-  // localStorage["console_log"] = document.getElementById("ConsoleLog").checked;
-  consolem("Отображение в консоли изменено!")
+document.getElementById("console_log").addEventListener("change", function() {
+  chrome.storage.local.set({'console_log' : document.getElementById("console_log").checked});
+
+  consolem("Отображение в консоли изменено!");
+
+  Analytics.fireEvent('console_log', { status: document.getElementById("popup_notify").checked});
 }, false)
 
 document.getElementById("deautorization").addEventListener("click", function() {
 	chrome.storage.local.set({'vkaccess_token': 0});
-	consolem("Деавторизация прошла успешно! Что бы авторизоваться нажмите кнопку Авторизации!")
+	consolem("Деавторизация прошла успешно! Что бы авторизоваться нажмите кнопку Авторизации!");
+
+  Analytics.fireEvent('deautorization');
 })
 
-document.getElementById("autorization").addEventListener("click", getClickHandler())
+document.getElementById("autorization").addEventListener("click", getClickHandler());
 
 
 //Функция для проверки авторизации в ВКорешах
@@ -256,7 +278,7 @@ function listenerHandler(authenticationTabId) {
 
         if (tabId === authenticationTabId && changeInfo.url !== undefined && changeInfo.status === "loading") {
 
-            if (changeInfo.url.indexOf('oauth.vk.com/blank.html#') > -1) {
+            if (changeInfo.url.indexOf('oauth.vk.com/blank.html#access_token') > -1) {
                 authenticationTabId = null;
                 chrome.tabs.onUpdated.removeListener(tabUpdateListener);
 
@@ -274,7 +296,10 @@ function listenerHandler(authenticationTabId) {
                     return;
                 }
                 chrome.storage.local.set({'vkaccess_token': vkAccessToken});
-								consolem("Авторизация прошла успешно! Что бы деавторизоваться нажмите кнопку Деавторизации!")
+
+                Analytics.fireEvent('autorization');
+
+								consolem("Авторизация прошла успешно! Что бы деавторизоваться нажмите кнопку Деавторизации!");
             }
         }
     };
